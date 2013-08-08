@@ -10,7 +10,7 @@
 <script>
 	var 	winTop = {
 			asName : 0, 
-			aniScrollTop : function(_num, _duration){
+			aniScrollTop : function(_num, _duration, _callBack){
 				var runtime = 0;
 				var perTime = 30;
 				var duration = _duration;
@@ -20,6 +20,7 @@
 				var startTop = 0;
 				var endTop = _num;
 				var nowTop = 0;
+				if(_callBack == undefined){_callBack = function(){};}
 				
 				if(typeof pageYOffset!= 'undefined'){
 					startTop = window.top.pageYOffset;
@@ -39,6 +40,7 @@
 						window.top.scrollTo(0, easing(runtime, startTop, (endTop - startTop), duration));
 					}else {
 						clearInterval(winTop.asName);
+						_callBack();
 					}
 				}, perTime);
 			}
@@ -46,7 +48,7 @@
 	
 	$(document).ready(function(e) {
         $(".aniScroll").click(function(e){
-			winTop.aniScrollTop(500, 900); // scrollTop, duration
+			winTop.aniScrollTop(500, 900, function(){alert("animate scroll top complete");}); // scrollTop, duration
 		});
     });
 </script>
